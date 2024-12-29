@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { removeBlog, updateBlog } from "../reducers/blogReducer";
 
-const Blog = ({ blog, currentUsername }) => {
+const Blog = ({ blog }) => {
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
+  const user = useSelector(state => state.login);
 
   const blogStyle = {
     paddingTop: 10,
@@ -44,7 +45,7 @@ const Blog = ({ blog, currentUsername }) => {
           </p>
           <p>
             Created by {blog.user?.name}
-            {blog.user?.username === currentUsername && (
+            {blog.user?.username === user.username && (
               <button id="remove-button" onClick={handleDeleteBtn}>
                 remove
               </button>
