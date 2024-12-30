@@ -1,35 +1,30 @@
-import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../reducers/loginReducer";
-import LoginForm from "./Login";
-import BlogForm from "./BlogForm";
-import BlogList from "./BlogList";
-import Togglable from "./Toggable";
+import LoginForm from "./LoginForm";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 
-const Blogs = () => {
+const Layout = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector(state => state.login);
-  const blogFormRef = useRef();
+  let location = useLocation();
 
   const handleLogoutBtn = e => {
     e.preventDefault();
     dispatch(logoutUser());
+    navigate("/");
   };
 
   return user === null ? (
-    <LoginForm />
+    <LoginForm location={location} />
   ) : (
     <div>
       <p>
         {user.name} logged in <button onClick={handleLogoutBtn}>logout</button>
       </p>
-      <Togglable buttonLabel="new blog" ref={blogFormRef}>
-        <BlogForm toggleRef={blogFormRef} />
-      </Togglable>
-      <h2>Blogs</h2>
-      <BlogList />
+      <Outlet />
     </div>
   );
 };
 
-export default Blogs;
+export default Layout;

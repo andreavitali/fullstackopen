@@ -2,17 +2,20 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../reducers/loginReducer";
 import PropTypes from "prop-types";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm = ({ location }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const doLogin = event => {
     event.preventDefault();
     dispatch(loginUser({ username, password }));
     setUsername("");
     setPassword("");
+    navigate(location?.pathname || "/", { replace: true });
   };
 
   return (
