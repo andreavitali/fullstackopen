@@ -8,8 +8,4 @@ router.get("/", (_req, res: Response<Diagnose[]>) => {
   res.send(diagnosesService.getDiagnoses());
 });
 
-router.post("/", (_req, res) => {
-  res.send("Saving a diary!");
-});
-
 export default router;
